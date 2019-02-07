@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<info>
+    <id>gantt</id>
+    <name>Gantt</name>
+    <summary>Gantt Chart Viewer integration app</summary>
+    <description><![CDATA[Integrates Gantt Chart Viewer with CERNBox]]></description>
+    <licence>AGPL</licence>
+    <author>Piotr Seweryn</author>
+    <version>1.0</version>
+    <namespace>Gantt</namespace>
+    <types>
+        <filesystem/>
+    </types>
+    <category>files</category>
+    <category>integration</category>
+    <category>organization</category>
+    <category>tools</category>
+    <website>https://gantt-viewer.web.cern.ch/help/index.html</website>
+    <bugs>https://gitlab.cern.ch/svcdhtmlx/gantt-viewer-cbox-integration/issues</bugs>
+    <repository type="git">https://gitlab.cern.ch/svcdhtmlx/gantt-viewer-cbox-integration</repository>
+</info>
