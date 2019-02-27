@@ -129,9 +129,9 @@
 	
 	/* Action handler for opening files in Gantt Chart Viewer */
 	OCA.Gantt.EditFileNewWindow = function (filePath) {
-		var iframeTemplate = `<iframe id="iframeEditor" name="iframeEditor"></iframe>`;
+		var iframeTemplate = '<iframe id="iframeEditor" name="iframeEditor" allowfullscreen="true"></iframe>';
 		
-		$('#content').html(iframeTemplate);
+		$("#content").html(iframeTemplate);
 		
 		var iframe = $("#iframeEditor")[0];
 		var ganttUrl = "https://gantt-viewer.web.cern.ch"
