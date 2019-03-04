@@ -150,11 +150,10 @@
 				return;
 			}
 	
-			/* Mime types are specified in the appconfig.php file and retrieved with RESTAPI call */
-			$.get(OC.generateUrl("apps/" + OCA.Gantt.AppName + "/ajax/ganttformats"))
+			$.getJSON(OC.generateUrl("apps/" + OCA.Gantt.AppName + "/config"))
 			.done(function (response) {
 				
-				OCA.Gantt.Mimes = response;
+				OCA.Gantt.Mimes = response.formats;
 				
 				$.each(OCA.Gantt.Mimes, function (ext, attr) {
 					
@@ -191,41 +190,41 @@ OC.Plugins.register("OCA.Files.FileList", OCA.Gantt.FileList);
 
 /* Change icons of files compatible with Gantt Chart Viewer in the main files list view */
 $(document).ready(function () {
-
-	ChangeIcons = function () {
-		
-		mimetypes = [];
-		
-		/* Mime types are specified in the appconfig.php file and retrieved with RESTAPI call */
-		$.get(OC.generateUrl("apps/" + OCA.Gantt.AppName + "/ajax/ganttformats"))
-		.done(function (response) {
-			
-			response.forEach(function(obj) {
-				mimetypes.push(obj.mime);
-			});
-			
-			$("#filestable").find("tr[data-type=file]").each(function () {
-				if (mimetypes.indexOf($(this).attr("data-mime")) >= 0 && $(this).find("div.thumbnail").length > 0) {
-					if ($(this).find("div.thumbnail").hasClass("icon-gantt") == false) {
-						$(this).find("div.thumbnail").addClass("icon icon-gantt");
-					}
+	ChangeIcons = function (mimetypes) {
+		$("#filestable").find("tr[data-type=file]").each(function () {
+			if (mimetypes.indexOf($(this).attr("data-mime")) >= 0 && $(this).find("div.thumbnail").length > 0) {
+				if ($(this).find("div.thumbnail").hasClass("icon-gantt") == false) {
+					$(this).find("div.thumbnail").addClass("icon icon-gantt");
 				}
-			});
-		})
-		.fail(function () {
-			/* Notify user of error */
-			console.log("ERROR! Failed to retrieve compatible mime types");
+			}
 		});
 	};
-	
-	if ($('#filesApp').val())
-	{
-		$('#app-content-files').add('#app-content-extstoragemounts')
-		.on('changeDirectory', function (e) {
-			ChangeIcons();
-		})
-		.on('fileActionsReady', function (e) {
-			ChangeIcons();
+		
+	$.getJSON(OC.generateUrl("apps/" + OCA.Gantt.AppName + "/config"))
+	.done(function(response) {
+		OCA.Gantt.Settings = response;
+
+		var mimetypes = [];
+		response.formats.forEach(function(obj) {
+			mimetypes.push(obj.mime);
 		});
-	}
+
+		if ($('#filesApp').val())
+		{
+			$('#app-content-files').add('#app-content-extstoragemounts')
+			.on('changeDirectory', function (e) {
+				ChangeIcons(mimetypes);
+			})
+			.on('fileActionsReady', function (e) {
+				ChangeIcons(mimetypes);
+			});
+		}
+			
+	})
+	.fail(function () {
+		/* Notify user of error */
+		console.log("ERROR! Failed to retrieve compatible mime types");
+	});
+
+	
 });
