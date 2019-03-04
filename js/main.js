@@ -54,7 +54,7 @@
 	
 		/* NOTE! getFileContents() from {core/js/files/client.js} and request() from {core/vendor/davclient.js/lib/client.js}
 		   were modified in order to enable setting AJAX request response type to ARRAY BUFFER */
-		ncClient.getFileContents(filePath, (filePath.split('.').pop().toLowerCase() === "mpp") ? "arraybuffer" : "")
+		ncClient.getFileContentsRT(filePath, null, (filePath.split('.').pop().toLowerCase() === "mpp") ? "arraybuffer" : "")
 		.then(function(status, contents) {
 			if(filePath.split('.').pop().toLowerCase() === "mpp") {
 				var blob = new Blob([contents]);
