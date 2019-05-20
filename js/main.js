@@ -134,8 +134,9 @@
 		$("#content").html(iframeTemplate);
 		
 		var iframe = $("#iframeEditor")[0];
-		var ganttUrl = "https://gantt-viewer.web.cern.ch" + "?username="+ OC.getCurrentUser().uid;
-		var originUrl = "https://gantt-viewer.web.cern.ch";
+		var ganttUrl = OCA.Gantt.Settings["viewer-server"] + "?username=" + OC.getCurrentUser().uid;
+		var originUrl = OCA.Gantt.Settings["viewer-server"];
+		console.log(OCA.Gantt.Settings);
 		
 		OCA.Gantt.DataExchangeHandler(iframe.contentWindow, filePath, originUrl);
 		iframe.setAttribute('src', ganttUrl);
@@ -152,6 +153,7 @@
 	
 			$.getJSON(OC.generateUrl("apps/" + OCA.Gantt.AppName + "/config"))
 			.done(function (response) {
+				OCA.Gantt.Settings = response;
 				
 				OCA.Gantt.Mimes = response.formats;
 				
