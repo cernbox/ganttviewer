@@ -134,7 +134,7 @@
 		$("#content").html(iframeTemplate);
 		
 		var iframe = $("#iframeEditor")[0];
-		var ganttUrl = "https://gantt-viewer.web.cern.ch"
+		var ganttUrl = "https://gantt-viewer.web.cern.ch" + "?username="+ OC.getCurrentUser().uid;
 		var originUrl = "https://gantt-viewer.web.cern.ch";
 		
 		OCA.Gantt.DataExchangeHandler(iframe.contentWindow, filePath, originUrl);
